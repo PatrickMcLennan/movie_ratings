@@ -1,0 +1,2 @@
+CREATE DATABASE movie_ratings_development;
+CREATE DATABASE movie_ratings_test;

@@ -1,20 +1,39 @@
 version: '3'
 services:
-
-  rust:
-    image: rust:1.61.0
-    container_name: movie_ratings_rust
-    expose:
-      - '3000'
-    volumes:
-      - ./:/app
-    working_dir: /app
-    
+   
   node:
     image: node:16.15.1
     container_name: movie_ratings_node
-    expose:
-      - '4000'
+    env_file:
+      - ./.env
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+    working_dir: /app
+
+  postgres:
+    build: packages/postgres
+    container_name: movie_ratings_postgres
+    env_file:
+      - ./.env
+    ports:
+      - '5432:5432'
+    tty: true
+    volumes:
+      - ./:/app
+    working_dir: /app
+
+  rust:
+    image: rust:1.61.0
+    depends_on:
+      - postgres
+    container_name: movie_ratings_rust
+    env_file:
+      - ./.env
+    ports:
+      - '4000:4000'
+    tty: true
     volumes:
       - ./:/app
     working_dir: /app
