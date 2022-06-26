@@ -15,6 +15,6 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
-[{package.json,.cargo.toml}]
+[{package.json,cargo.toml}]
 indent_style = space
 indent_size = 2

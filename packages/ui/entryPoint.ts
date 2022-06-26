@@ -1,6 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { App } from "./components";
 
+import "./styles.scss";
+
 function ensureRoot() {
   const newRoot = document.createElement(`div`);
   newRoot.setAttribute(`id`, `ROOT`);

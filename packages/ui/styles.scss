@@ -1,0 +1,11 @@
+#ROOT {
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+  }
+}
