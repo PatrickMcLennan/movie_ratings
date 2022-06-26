@@ -28,7 +28,6 @@ async fn graphql(st: web::Data<Schema>, data: web::Json<GraphQLRequest>) -> impl
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-	// Create Juniper schema
 	let schema = Arc::new(create_schema());
     HttpServer::new(move || {
         App::new()

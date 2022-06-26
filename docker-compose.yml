@@ -2,18 +2,19 @@ version: '3'
 services:
    
   node:
-    image: node:16.15.1
+    build: ./packages/ui
     container_name: movie_ratings_node
     env_file:
       - ./.env
     ports:
       - '3000:3000'
+    tty: true
     volumes:
       - ./:/app
     working_dir: /app
 
   postgres:
-    build: packages/postgres
+    build: ./packages/postgres
     container_name: movie_ratings_postgres
     env_file:
       - ./.env
@@ -25,8 +26,9 @@ services:
     working_dir: /app
 
   rust:
-    image: rust:1.61.0
+    build: ./packages/server
     depends_on:
+      - node
       - postgres
     container_name: movie_ratings_rust
     env_file:
