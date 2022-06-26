@@ -1,0 +1,20 @@
+version: '3'
+services:
+
+  rust:
+    image: rust:1.61.0
+    container_name: movie_ratings_rust
+    expose:
+      - '3000'
+    volumes:
+      - ./:/app
+    working_dir: /app
+    
+  node:
+    image: node:16.15.1
+    container_name: movie_ratings_node
+    expose:
+      - '4000'
+    volumes:
+      - ./:/app
+    working_dir: /app
