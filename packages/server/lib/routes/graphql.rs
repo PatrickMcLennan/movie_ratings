@@ -11,7 +11,6 @@ pub async fn graphql(
 	graphql: Data<Arc<Schema>>,
 	req: Json::<GraphQLRequest>
 ) -> impl Responder {
-	println!("inside of /graphql handler");
     let res = req.execute(&graphql, &context).await;
     HttpResponse::Ok().json(res)
 }

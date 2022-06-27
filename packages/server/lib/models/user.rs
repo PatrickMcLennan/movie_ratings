@@ -22,6 +22,7 @@ pub struct User {
 }
 
 impl User {
+
 	pub async fn get_all(connection: &PgPool) -> QueryResult<Vec<User>> {
 		use crate::models::diesel_schema::users;
 		let conn = connection.get().unwrap();
@@ -33,4 +34,5 @@ impl User {
 		let conn = connection.get().unwrap();
 		users::table.find(id).first(&conn)
 	}
+	
 }

@@ -22,6 +22,7 @@ impl QueryRoot {
 		let users = User::get_all(&context.db).await;
 		Ok(users.unwrap())
 	}
+
 }
 
 pub struct MutationRoot;
@@ -35,6 +36,7 @@ impl MutationRoot {
 	) -> FieldResult<i32> {
         Ok(id)
     }
+	
 }
 
 pub type Schema = RootNode<'static, QueryRoot, MutationRoot, EmptySubscription<Context>>;

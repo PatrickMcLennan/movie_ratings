@@ -25,11 +25,23 @@ services:
       - ./:/app
     working_dir: /app
 
+  redis:
+    build: ./packages/redis
+    container_name: movie_ratings_redis
+    env_file:
+      - ./.env
+    ports:
+      - '6379:6379'
+    tty: true
+    volumes:
+      - ./:/app
+    working_dir: /app
+
   rust:
     build: ./packages/server
     depends_on:
-      - node
       - postgres
+      - redis
     container_name: movie_ratings_rust
     env_file:
       - ./.env
