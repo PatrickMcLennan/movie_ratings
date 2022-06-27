@@ -5,15 +5,13 @@ import { MuiTheme } from "..";
 
 type Props = {};
 
-export const App: FC<Props> = () => {
-  return (
-    <MuiTheme>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Pages.Home />} />
-          <Route path="/login" element={<Pages.Login />} />
-        </Routes>
-      </BrowserRouter>
-    </MuiTheme>
-  );
-};
+export const App: FC<Props> = () => (
+  <MuiTheme>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Pages.Home />} />
+        <Route path="/login" element={<Pages.Login />} />
+      </Routes>
+    </BrowserRouter>
+  </MuiTheme>
+);

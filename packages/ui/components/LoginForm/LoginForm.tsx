@@ -9,6 +9,7 @@ import {
   Theme,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import { TextInput } from "../forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -25,11 +26,6 @@ const sx = {
   form: {
     display: `grid`,
     width: "100%",
-  },
-  formHelperText: {
-    "&, & span": {
-      height: `2rem`,
-    },
   },
   submit: {
     fontSize: `1.6rem`,
@@ -64,40 +60,12 @@ export const LoginForm: FC<Props> = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(console.log)} sx={sx.form}>
-      <Controller
+      <TextInput control={control} errors={errors} name="email" type="email" />
+      <TextInput
         control={control}
-        name="email"
-        render={({ field }) => {
-          const emailError = errors?.email;
-          return (
-            <FormControl error={!!emailError}>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <Input {...field} id="email" type="email" />
-              <FormHelperText sx={sx.formHelperText} aria-hidden={!emailError}>
-                {emailError ? emailError.message : ` `}
-              </FormHelperText>
-            </FormControl>
-          );
-        }}
-      />
-      <Controller
-        control={control}
+        errors={errors}
         name="password"
-        render={({ field }) => {
-          const passwordError = errors.password;
-          return (
-            <FormControl error={!!passwordError}>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input {...field} id="password" type="password" />
-              <FormHelperText
-                sx={sx.formHelperText}
-                aria-hidden={!passwordError}
-              >
-                {passwordError ? passwordError.message : ` `}
-              </FormHelperText>
-            </FormControl>
-          );
-        }}
+        type="password"
       />
       <Button sx={sx.submit} type="submit" variant="contained">
         Log In
