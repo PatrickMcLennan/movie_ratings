@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "serve": "webpack-dev-server --config ./webpack/webpack.dev.js",
-    "build": "webpack --config ./webpack/webpack.prod.js"
+    "build": "webpack --config ./webpack/webpack.prod.js",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "peerDependencies": {
     "@swc/core": "*",
@@ -18,14 +19,24 @@
     "webpack-merge": "*"
   },
   "devDependencies": {
+    "@apollo/client": "^3.6.9",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.5.1",
+    "@graphql-codegen/typescript-operations": "2.4.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.16",
     "@hookform/resolvers": "^2.9.3",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.5",
+    "@types/graphql": "^14.5.0",
+    "apollo": "^2.34.0",
+    "axios": "^0.27.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "dotenv": "^16.0.1",
+    "graphql": "^16.5.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",

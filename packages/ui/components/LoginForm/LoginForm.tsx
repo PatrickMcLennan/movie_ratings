@@ -1,14 +1,6 @@
 import React, { FC } from "react";
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  Input,
-  Theme,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Box, Button } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { TextInput } from "../forms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -35,6 +27,17 @@ const sx = {
   },
 } as const;
 
+const resolver = yup.object().shape({
+  email: yup
+    .string()
+    .email(errorMessages.invalidEmail)
+    .required(errorMessages.noEmail),
+  password: yup
+    .string()
+    .min(8, errorMessages.invalidPassword)
+    .required(errorMessages.noPassword),
+});
+
 export const LoginForm: FC<Props> = () => {
   const {
     formState: { errors },
@@ -44,18 +47,7 @@ export const LoginForm: FC<Props> = () => {
     email: string;
     password: string;
   }>({
-    resolver: yupResolver(
-      yup.object().shape({
-        email: yup
-          .string()
-          .email(errorMessages.invalidEmail)
-          .required(errorMessages.noEmail),
-        password: yup
-          .string()
-          .min(8, errorMessages.invalidPassword)
-          .required(errorMessages.noPassword),
-      })
-    ),
+    resolver: yupResolver(resolver),
   });
 
   return (

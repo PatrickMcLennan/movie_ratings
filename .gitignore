@@ -3,3 +3,5 @@ dist/
 target/
 .env
 yarn-error.log
+graphql-schema.json
+dump.rdb
