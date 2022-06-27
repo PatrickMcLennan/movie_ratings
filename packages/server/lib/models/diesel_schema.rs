@@ -1,10 +1,10 @@
 table! {
     users (id) {
-        created_at -> Timestamp,
+        created_at -> Timestamptz,
         email -> Varchar,
         first_name -> Varchar,
         id -> Int4,
         last_name -> Varchar,
-        updated_at -> Timestamp,
+        updated_at -> Timestamptz,
     }
 }

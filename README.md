@@ -10,20 +10,25 @@ A platform to rate & share movies with others
 
 ## Contributing
 
-### Getting set up.
+### Getting set up:
 
 
 1. Install
   - [docker](https://www.docker.com/)
   - [docker-compose](https://docs.docker.com/compose/)
+  <br />
 2. In the root of the repo, run
    ```bash
       docker-compose up -d;
    ```
    to create Node, Rust & Postgres containers.
-
-
+  <br />
+3. Inside of the Rust docker container, run
+   ```bash
+      diesel migration run
+   ```
+  <br />
 
 ### BE
 
-1. We use [diesel](https://diesel.rs/) as an ORM.  Use that to generate all migrations / seeds.  [Here's a quick intro guide](https://diesel.rs/guides/getting-started).  Note that the `diesel_cli` comes pre-installed on the Docker image.
+1. We use [diesel](https://diesel.rs/) as an ORM.  Use that to generate all migrations / seeds.  [Here's a quick intro guide](https://diesel.rs/guides/getting-started).  *Note: that the `diesel_cli` comes pre-installed on the Docker image.*
