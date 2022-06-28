@@ -1,15 +1,9 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -21,37 +15,39 @@ export type Scalars = {
 };
 
 export type MutationRoot = {
-  __typename?: "MutationRoot";
-  getId: Scalars["Int"];
+  __typename?: 'MutationRoot';
+  getId: Scalars['Int'];
 };
 
+
 export type MutationRootGetIdArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
 
 export type QueryRoot = {
-  __typename?: "QueryRoot";
+  __typename?: 'QueryRoot';
   getAllUsers: Array<User>;
   getUserById: User;
 };
 
+
 export type QueryRootGetUserByIdArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
 
 /** Information about a user */
 export type User = {
-  __typename?: "User";
+  __typename?: 'User';
   /** Account Creation Time */
-  createdAt: Scalars["DateTimeUtc"];
+  createdAt: Scalars['DateTimeUtc'];
   /** Users email */
-  email: Scalars["String"];
+  email: Scalars['String'];
   /** Users first name */
-  firstName: Scalars["String"];
+  firstName: Scalars['String'];
   /** Users id */
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   /** Users last name */
-  lastName: Scalars["String"];
+  lastName: Scalars['String'];
   /** Account last updated time */
-  updatedAt: Scalars["DateTimeUtc"];
+  updatedAt: Scalars['DateTimeUtc'];
 };

@@ -4,5 +4,5 @@ use juniper::http::{graphiql::graphiql_source};
 
 #[get("/graphiql")]
 pub async fn graphiql() -> impl Responder {
-    Html(graphiql_source("/graphql", None))
+    Html(graphiql_source("/api/graphql", None))
 }

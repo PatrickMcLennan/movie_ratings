@@ -5,7 +5,7 @@ use juniper::http::GraphQLRequest;
 use crate::models::Context;
 use crate::config::graphql::Schema;
 
-#[route("/graphql", method = "GET", method = "POST")]
+#[route("/api/graphql", method = "GET", method = "POST")]
 pub async fn graphql(
 	context:  Data<Context>,
 	graphql: Data<Arc<Schema>>,
