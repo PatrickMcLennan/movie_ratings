@@ -1,6 +1,6 @@
 use juniper::FieldResult;
 use juniper::{EmptySubscription, RootNode};
-use crate::models::{Context, User};
+use crate::models::{Context, PublicUser, User};
 // use juniper::{EmptyMutation, GraphQLEnum, GraphQLInputObject, GraphQLObject};
 
 pub struct QueryRoot;
@@ -11,16 +11,22 @@ impl QueryRoot {
 	async fn get_user_by_id(
 		context: &Context,
 		#[graphql(description = "id of the user")] id: i32,
-	) -> FieldResult<User> {
+	) -> FieldResult<PublicUser> {
 		let user = User::get_by_id(id, &context.db).await;
-		Ok(user.unwrap())
+		Ok(PublicUser::from_user(user.unwrap()))
 	}
 
 	async fn get_all_users(
 		context: &Context
-	) -> FieldResult<Vec<User>> {
+	) -> FieldResult<Vec<PublicUser>> {
 		let users = User::get_all(&context.db).await;
-		Ok(users.unwrap())
+		Ok(
+			users
+				.unwrap()
+				.into_iter()
+				.map(|u| PublicUser::from_user(u))
+				.collect()
+		)
 	}
 
 }

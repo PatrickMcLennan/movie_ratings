@@ -5,6 +5,7 @@ table! {
         first_name -> Varchar,
         id -> Int4,
         last_name -> Varchar,
+        password_salt -> Text,
         updated_at -> Timestamptz,
     }
 }

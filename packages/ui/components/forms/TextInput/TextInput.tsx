@@ -17,6 +17,7 @@ import {
 type Props<T> = {
   control: Control<T>;
   errors: FieldErrors<T>;
+  label: string;
   name: Path<T>;
   type: string;
 };
@@ -29,7 +30,7 @@ const sx = {
   },
 } as const;
 
-export function TextInput<T>({ control, errors, name, type }: Props<T>) {
+export function TextInput<T>({ control, errors, label, name, type }: Props<T>) {
   return (
     <Controller
       control={control}
@@ -38,7 +39,7 @@ export function TextInput<T>({ control, errors, name, type }: Props<T>) {
         const error = errors?.[name as string];
         return (
           <FormControl error={!!error}>
-            <InputLabel htmlFor={name}>Email</InputLabel>
+            <InputLabel htmlFor={name}>{label}</InputLabel>
             <Input {...field} id={name} type={type} />
             <FormHelperText sx={sx.formHelperText} aria-hidden={!error}>
               {error ? error.message : ` `}
