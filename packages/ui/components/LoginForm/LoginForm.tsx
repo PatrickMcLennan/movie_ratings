@@ -5,6 +5,7 @@ import { TextInput } from "..";
 import { httpClient } from "../../clients";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { Navigate, useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -48,6 +49,7 @@ const resolver = yup.object().shape({
 });
 
 export const LoginForm: FC<Props> = () => {
+  const navigate = useNavigate();
   const {
     formState: { errors },
     handleSubmit,
@@ -59,24 +61,17 @@ export const LoginForm: FC<Props> = () => {
     resolver: yupResolver(resolver),
   });
 
-  const onSubmit = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    try {
-      const res = await httpClient({
-        method: `POST`,
-        url: `/login`,
-        data: { email, password },
+  const onSubmit = ({ email, password }: { email: string; password: string }) =>
+    httpClient({
+      method: `POST`,
+      url: `/login`,
+      data: { email, password },
+    })
+      .then(() => navigate(`/`))
+      .catch(({ response: { status, data } }) => {
+        console.log(status);
+        console.log(data);
       });
-      console.log(res);
-    } catch ({ response }) {
-      const { status, data } = response;
-    }
-  };
 
   return (
     <Box

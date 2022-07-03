@@ -14,6 +14,7 @@ async fn main() -> std::io::Result<()> {
 	env_logger::init();
 
 	let secret_key = Key::generate();
+	// let secret_key = env::var("COOKIE_KEY").unwrap()
 		
     HttpServer::new(move || {
 		App::new()
