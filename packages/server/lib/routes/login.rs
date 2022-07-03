@@ -1,17 +1,21 @@
-use actix_web::{route,web::{Data, Json}, HttpRequest, HttpResponse, Responder};
+use actix_web::{route,web::{Data, Json}, HttpResponse, Responder};
+use actix_session::Session;
 use crate::{config, models::{dto::login::LoginDTO, User}};
 use std::thread;
 
 type JsonDTO = Json<LoginDTO>;
 
+
 #[route("/api/login", method = "POST")]
 pub async fn login(
-	_req: HttpRequest,
 	dto: JsonDTO,
-	db: Data<config::postgres::PgPool>
+	db: Data<config::postgres::PgPool>,
+	session: Session,
 ) -> impl Responder {
+	let four_hundred = HttpResponse::BadRequest().body::<String>(String::from("Invalid email or password"));
+
 	let dto_struct = LoginDTO::from_json(dto);
-	if !dto_struct.validate() { return HttpResponse::BadRequest().body::<String>(String::from("Invalid email or password")) };
+	if !dto_struct.validate() { return four_hundred };
 
 	let id = match thread::spawn({
 		let db_clone = db.get_ref().clone();
@@ -24,15 +28,16 @@ pub async fn login(
 		.await
 		.map_err(actix_web::error::ErrorInternalServerError) {
 			Ok(v) => v,
-			Err(e) => {
-				println!("from inside id");
-				println!("{:?}", e);
-				return HttpResponse::BadRequest().body::<String>(String::from("Invalid email or password"))
-			}
+			Err(_e) => { return four_hundred }
 		};
 
-	println!("Users id is: {}", id);
+	match session.insert(&id.to_string(), String::new()) {
+		Ok(_) => HttpResponse::Created().body::<String>(String::from("User logged in")),
+		Err(e) => {
+			println!("{:?}", e);
+			HttpResponse::InternalServerError().body::<String>(String::from("Error creating a session"))
+		}
+	}
 
-    HttpResponse::Ok().body::<String>(String::from("working"))
 }
  

@@ -4,16 +4,15 @@ use chrono::{DateTime, Utc};
 use diesel::prelude::*;
 use crate::config::postgres::PgPool;
 use diesel::sql_types::Text;
-
 #[derive(Queryable)]
 pub struct User {
 	pub created_at: DateTime<Utc>,
 	pub email: String,
 	pub first_name: String,
-	pub id: i32,
+	pub id: String,
 	pub last_name: String,
 	pub password_salt: String,
-	pub updated_at: DateTime<Utc>,  
+	pub updated_at: DateTime<Utc>,
 }
 
 impl User {
@@ -22,7 +21,7 @@ impl User {
 		email_attempt: String, 
 		password: String, 
 		connection: PgPool
-	) -> QueryResult<i32> {
+	) -> QueryResult<String> {
 		use crate::models::diesel_schema::users::dsl::{id, users};
 		use diesel::dsl::sql;
 		users
@@ -34,16 +33,16 @@ impl User {
 					.bind::<Text, _>(password)
 					.sql(", password_salt)")
 			)
-			.first::<i32>(&connection.get().unwrap())
+			.first::<String>(&connection.get().unwrap())
 	}
 
 	pub async fn get_all(connection: &PgPool) -> QueryResult<Vec<User>> {
-		use crate::models::diesel_schema::users::dsl::{users};
+		use crate::models::diesel_schema::users::dsl::users;
 		users.load::<User>(&connection.get().unwrap())
 	}
 	
-	pub async fn get_by_id(id: i32, connection: &PgPool) -> QueryResult<User> {
-		use crate::models::diesel_schema::users::dsl::{users};
+	pub async fn get_by_id(id: String, connection: &PgPool) -> QueryResult<User> {
+		use crate::models::diesel_schema::users::dsl::users;
 		users.find(id).first(&connection.get().unwrap())
 	}
 	
@@ -59,7 +58,7 @@ pub struct PublicUser {
 	#[graphql(description = "Users first name")]
 	pub first_name: String,
 	#[graphql(description = "Users id")]
-	pub id: i32,
+	pub id: String,
 	#[graphql(description = "Users last name")]
 	pub last_name: String,
 	#[graphql(description = "Account last updated time")]

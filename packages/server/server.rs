@@ -1,27 +1,33 @@
 extern crate env_logger;
-use std::{env, sync::Arc};
+use std::{env};
 use dotenv::dotenv;
 use actix_web::{middleware, web::{Data}, App,  HttpServer};
-
-use lib::{models, config, routes};
+use actix_session::{CookieContentSecurity, storage::{CookieSessionStore}, SessionMiddleware};
+use lib::{config, routes};
+use actix_web::cookie::Key;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
 	dotenv().ok();
 	env::set_var("RUST_LOG", "actix_web=trace");
 	env_logger::init();
+	// let redis_url = env::var("REDIS_URL").expect("REDIS_URL must be set");
 
-	let graphql = Arc::new(config::graphql::create_schema());
-	let db = Arc::new(config::postgres::establish_postgres_connection().unwrap());
-	let redis = Arc::new(config::redis::connect_to_redis().unwrap());
-
+	let secret_key = Key::generate();
+		
     HttpServer::new(move || {
-        App::new()
-			.app_data(Data::new(models::Context {
-				db: db.clone(),
-				redis: redis.clone()
-			}))
-			.app_data(Data::new(graphql.clone()))
+		App::new()
+			.wrap(
+				SessionMiddleware::builder(
+					CookieSessionStore::default(),
+					secret_key.clone()
+				)
+					.cookie_secure(false)
+					.cookie_http_only(true)
+					.cookie_content_security(CookieContentSecurity::Private)
+					.build()		
+			)
+			.app_data(Data::new(config::graphql::create_schema()))
 			.app_data(Data::new(config::postgres::establish_postgres_connection().unwrap().clone()))
 			.wrap(middleware::Compress::default())
 			.wrap(middleware::Logger::default())

@@ -10,7 +10,7 @@ impl QueryRoot {
 
 	async fn get_user_by_id(
 		context: &Context,
-		#[graphql(description = "id of the user")] id: i32,
+		#[graphql(description = "id of the user")] id: String,
 	) -> FieldResult<PublicUser> {
 		let user = User::get_by_id(id, &context.db).await;
 		Ok(PublicUser::from_user(user.unwrap()))

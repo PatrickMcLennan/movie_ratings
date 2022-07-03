@@ -3,7 +3,7 @@ table! {
         created_at -> Timestamptz,
         email -> Varchar,
         first_name -> Varchar,
-        id -> Int4,
+        id -> Varchar,
         last_name -> Varchar,
         password_salt -> Text,
         updated_at -> Timestamptz,
