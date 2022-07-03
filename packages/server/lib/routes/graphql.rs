@@ -10,7 +10,6 @@ pub async fn graphql(
 	graphql: Data<config::graphql::Schema>,
 	req: Json::<GraphQLRequest>,
 	db: Data<config::postgres::PgPool>,
-	// session: Session
 ) -> impl Responder {
 	let context = Data::new(Context {
 		db: db.clone(),

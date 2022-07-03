@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Box, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextInput } from "..";
+import { httpClient } from "../../clients";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -58,11 +59,30 @@ export const LoginForm: FC<Props> = () => {
     resolver: yupResolver(resolver),
   });
 
+  const onSubmit = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    try {
+      const res = await httpClient({
+        method: `POST`,
+        url: `/login`,
+        data: { email, password },
+      });
+      console.log(res);
+    } catch ({ response }) {
+      const { status, data } = response;
+    }
+  };
+
   return (
     <Box
       component="form"
       noValidate
-      onSubmit={handleSubmit(console.log)}
+      onSubmit={handleSubmit((values) => onSubmit(values))}
       sx={sx.form}
     >
       <TextInput

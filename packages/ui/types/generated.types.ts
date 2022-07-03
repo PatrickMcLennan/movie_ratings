@@ -24,20 +24,9 @@ export type MutationRootGetIdArgs = {
   id: Scalars['Int'];
 };
 
-export type QueryRoot = {
-  __typename?: 'QueryRoot';
-  getAllUsers: Array<User>;
-  getUserById: User;
-};
-
-
-export type QueryRootGetUserByIdArgs = {
-  id: Scalars['Int'];
-};
-
-/** Information about a user */
-export type User = {
-  __typename?: 'User';
+/** Public information about a user available */
+export type PublicUser = {
+  __typename?: 'PublicUser';
   /** Account Creation Time */
   createdAt: Scalars['DateTimeUtc'];
   /** Users email */
@@ -45,9 +34,20 @@ export type User = {
   /** Users first name */
   firstName: Scalars['String'];
   /** Users id */
-  id: Scalars['Int'];
+  id: Scalars['String'];
   /** Users last name */
   lastName: Scalars['String'];
   /** Account last updated time */
   updatedAt: Scalars['DateTimeUtc'];
+};
+
+export type QueryRoot = {
+  __typename?: 'QueryRoot';
+  getAllUsers: Array<PublicUser>;
+  getUserById: PublicUser;
+};
+
+
+export type QueryRootGetUserByIdArgs = {
+  id: Scalars['String'];
 };
