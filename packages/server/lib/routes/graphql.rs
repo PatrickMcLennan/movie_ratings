@@ -1,10 +1,15 @@
 // use actix_session::Session;
 use actix_web::{route,web::{Data, Json}, HttpResponse, Responder, HttpRequest};
 use juniper::http::GraphQLRequest;
-use actix_web::cookie::Cookie;
 
 use crate::models::Context;
 use crate::config;
+use serde::Serialize;
+
+#[derive(Serialize)]
+struct Response {
+	message: String,
+}
 
 #[route("/api/graphql", method = "GET", method = "POST")]
 pub async fn graphql(
@@ -23,7 +28,9 @@ pub async fn graphql(
 			cookie_name == "id"
 		}) {
 			Some(c) => c,
-			None => return HttpResponse::Unauthorized().body("User must be logged in")
+			None => return HttpResponse::Unauthorized().json(Response {
+				message: "User must be logged in".to_string()
+			})
 		};
 
 	println!("id_cookie is :{:?}", id_cookie);

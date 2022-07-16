@@ -1,6 +1,6 @@
 overwrite: true
 schema: "http://movie_ratings_rust:4000/api/graphql"
-# documents: "src/**/*.graphql"
+# documents: "./**/*.graphql"
 generates:
   ./types/generated.types.ts:
     plugins:

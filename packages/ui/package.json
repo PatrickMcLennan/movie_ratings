@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "webpack-dev-server --config ./webpack/webpack.dev.js",
+    "dev": "concurrently 'yarn serve' 'yarn codegen -- --watch'",
     "build": "webpack --config ./webpack/webpack.prod.js",
     "codegen": "graphql-codegen --config codegen.yml"
   },
@@ -34,6 +35,7 @@
     "apollo": "^2.34.0",
     "axios": "^0.27.2",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^7.2.2",
     "css-loader": "^6.7.1",
     "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
